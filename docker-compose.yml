@@ -1,0 +1,31 @@
+version: "3.5"
+
+services:
+  postgres:
+    image: postgres:9.6  # in sql fiddle this version specified
+    env_file:
+      - .env
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_HOST: ${DB_HOST}
+    ports:
+      - "${DB_PORT}:5432"
+    networks:
+      - sql_task
+    restart: unless-stopped
+
+  python:
+    build: .
+    env_file:
+      - .env
+    networks:
+      - sql_task
+    volumes:
+      - .:/app
+    depends_on:
+      - postgres
+
+networks:
+  sql_task:
+    driver: bridge
