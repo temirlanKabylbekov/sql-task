@@ -82,17 +82,6 @@ class TestInitial:
             ])
             assert get_result(conn, 'GBP') == []
 
-    def test_empty_exchange_rates(self, db_migrations, db_data):
-        db_conn = db_migrations(settings.MIGRATION_INITIAL)
-        with closing(db_conn) as conn:
-            db_data(conn, 'transactions', [
-                ('2018-04-01 00:00:00', 1, 'EUR', 2.45),
-                ('2018-04-01 00:30:00', 2, 'USD', 2.45),
-                ('2018-04-01 01:20:00', 2, 'USD', 0.45),
-                ('2018-04-01 18:01:00', 3, 'GBP', 2),
-            ])
-            assert get_result(conn, 'GBP') == []
-
     def test_empty_transactions_and_exchange_rates(self, db_migrations, db_data):
         db_conn = db_migrations(settings.MIGRATION_INITIAL)
         with closing(db_conn) as conn:
@@ -113,6 +102,7 @@ class TestInitial:
                 ('2018-04-01 18:01:00', 3, 'GBP', 2),
             ])
             expected = [
+                (2, round_number_to_decimal(0, 3)),
                 (3, round_number_to_decimal(2 * 1, 3)),
             ]
             assert get_result(conn, 'GBP') == expected
@@ -182,7 +172,10 @@ class TestInitial:
             db_data(conn, 'transactions', [
                 ('2018-04-01 00:30:00', 2, 'USD', None),
             ])
-            assert get_result(conn, 'GBP') == []
+            expected = [
+                (2, round_number_to_decimal(0, 3)),
+            ]
+            assert get_result(conn, 'GBP') == expected
 
     def test_transactions_without_amount_not_including_in_result(self, db_migrations, db_data):
         db_conn = db_migrations(settings.MIGRATION_INITIAL)
@@ -254,7 +247,10 @@ class TestInitial:
             db_data(conn, 'transactions', [
                 ('2018-04-01 00:30:00', 3, 'GBP', None),
             ])
-            assert get_result(conn, 'GBP') == []
+            expected = [
+                (3, round_number_to_decimal(0, 3)),
+            ]
+            assert get_result(conn, 'GBP') == expected
 
     def test_transactions_only_to_gbp(self, db_migrations, db_data):
         db_conn = db_migrations(settings.MIGRATION_INITIAL)
