@@ -51,7 +51,7 @@ def get_result_for_new_schema(conn, to_currency):
                      Tr.currency) AS A
         WHERE Ex.ts = A.ex_ts
               AND Ex.from_currency = A.currency
-              AND Ex.to_currency = 'GBP'
+              AND Ex.to_currency = '{to_currency}'
               AND Tr.ts = A.tr_ts
               AND Tr.currency = A.currency
         GROUP BY Tr.user_id

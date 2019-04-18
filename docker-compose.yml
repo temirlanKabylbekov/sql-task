@@ -16,7 +16,12 @@ services:
     restart: unless-stopped
 
   python:
-    build: .
+    build:
+      context: .
+      args:
+        DB_HOST: ${DB_HOST}
+        DB_PORT: ${DB_PORT}
+        DB_WAIT_TIMEOUT: ${DB_WAIT_TIMEOUT}
     env_file:
       - .env
     networks:

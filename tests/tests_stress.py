@@ -24,7 +24,7 @@
 
 
 # @pytest.mark.repeat(STRESS_TEST_REPEAT_COUNT)
-# def test_with_indexes(db_migrations, db_data, benchmark):
+# def test_with_new_schema_and_indexes(db_migrations, db_data, benchmark):
 #     db_conn = db_migrations(settings.MIGRATION_INITIAL)
 #     with closing(db_conn) as conn:
 #         db_data(conn, 'exchange_rates', Factory.exchange_rates(10))
