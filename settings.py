@@ -10,4 +10,3 @@ CURRENT_DIR = os.getcwd()
 MIGRATIONS_FOLDER = 'migrations'
 MIGRATION_INITIAL = os.path.join(CURRENT_DIR, MIGRATIONS_FOLDER, '1-initial.sql')
 MIGRATION_WITH_NEW_SCHEMA = os.path.join(CURRENT_DIR, MIGRATIONS_FOLDER, '2-with_new_schema.sql')
-MIGRATION_WITH_INDEXES = os.path.join(CURRENT_DIR, MIGRATIONS_FOLDER, '3-with_indexes.sql')
